@@ -1271,6 +1271,7 @@ private fun PlaybackSettingsSection(
                         isTablet = isTablet,
                         onCheckedChange = PlayerSettingsRepository::setNvidiaRtxSuperResolutionEnabled,
                     )
+                    LibmpvShaderSettingsRow(isTablet = isTablet)
                 }
             }
         }

@@ -32,6 +32,7 @@ import com.nuvio.app.core.ui.AppPresenceState
 import com.nuvio.app.core.ui.LocalNuvioPlatformDensity
 import com.nuvio.app.core.ui.PresenceSnapshot
 import com.nuvio.app.features.player.desktop.DesktopHostOs
+import com.nuvio.app.features.player.desktop.DesktopLibmpvShaders
 import com.nuvio.app.features.player.desktop.DesktopPlayerPictureInPicture
 import com.nuvio.app.features.player.desktop.NativePlayerController
 import com.nuvio.app.features.player.desktop.NativePlayerHost
@@ -206,6 +207,7 @@ private fun NativePlayerSurface(
             return@LaunchedEffect
         }
         delay(16L)
+        DesktopLibmpvShaders.applyBeforeAttach()
         controller.attach(
             sourceUrl = sourceUrl,
             sourceHeaders = playbackHeaders,

@@ -456,7 +456,7 @@ internal class NativePlayerController(
                 "speed=${stateWithVolume.playbackSpeedLabel} audioLabel=${stateWithVolume.audioLabel} " +
                 "subsLabel=${stateWithVolume.subtitlesLabel} fullscreen=$isFullscreen"
         }
-        NativePlayerBridge.updateControls(current, stateWithVolume.toControlsJson(isFullscreen, ::refreshControlsForImage))
+        NativePlayerBridge.updateControls(current, DesktopLibmpvShaders.decorateControlsJson(stateWithVolume.toControlsJson(isFullscreen, ::refreshControlsForImage)))
     }
 
     private fun refreshControlsForImage() {
@@ -535,6 +535,7 @@ internal class NativePlayerController(
         if (type.shouldLogNativeControlEvent()) {
             log.d { "event received handle=$handle type=$type value=$value" }
         }
+        if (DesktopLibmpvShaders.handleControlEvent(handle, type, value)) return
         when (type) {
             "cursorActivity" -> host.noteCursorActivity()
             "scrubChange" -> {
