@@ -30,6 +30,8 @@
 #include <unordered_map>
 #include <vector>
 
+#include "player_shaders.h"
+
 using Microsoft::WRL::Callback;
 using Microsoft::WRL::ComPtr;
 
@@ -870,6 +872,7 @@ class WindowsMpvWebPlayer : public std::enable_shared_from_this<WindowsMpvWebPla
     };
 
 public:
+    void setShaderProperty(const char *name, const std::string &value) { setStringProperty(name, value); }
     void initialize(
         HWND host,
         const std::string &sourceUrl,
@@ -1793,6 +1796,8 @@ private:
                 setMpvOptionStringLocked("http-header-fields", headers.c_str());
             }
 
+            player_shaders::applyMpvOptions([&](const char *name, const char *value) { setMpvOptionStringLocked(name, value); });
+
             int initResult = api.initialize(mpv);
             if (initResult < 0) {
                 throw std::runtime_error(std::string("mpv_initialize failed: ") + api.errorText(initResult));
@@ -2368,6 +2373,8 @@ std::shared_ptr<WindowsMpvWebPlayer> playerFromHandle(jlong handle) {
 }
 
 } // namespace
+
+#include "player_shaders_live.inc"
 
 BOOL APIENTRY DllMain(HMODULE module, DWORD reason, LPVOID) {
     if (reason == DLL_PROCESS_ATTACH) {
