@@ -24,6 +24,7 @@ import com.nuvio.app.features.player.IosTargetTransfer
 import com.nuvio.app.features.player.PlayerSettingsRepository
 import com.nuvio.app.isDesktop
 import com.nuvio.app.isIos
+import com.nuvio.app.isWindows
 import nuvio.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
@@ -85,6 +86,7 @@ internal fun PlaybackVideoSettings(
                         isTablet = isTablet,
                         onClick = { showDecoderPriorityDialog = true },
                     )
+                    if (isWindows) LibmpvShaderSettingsRow(isTablet = isTablet)
                     if (!isDesktop) {
                         SettingsGroupDivider(isTablet = isTablet)
                         SettingsSwitchRow(
