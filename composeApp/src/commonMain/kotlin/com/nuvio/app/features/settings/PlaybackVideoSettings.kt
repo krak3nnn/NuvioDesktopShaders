@@ -109,6 +109,22 @@ internal fun PlaybackVideoSettings(
                     }
                 }
             }
+            if (isWindows) {
+                SettingsSection(
+                    title = stringResource(Res.string.settings_playback_nvidia_rtx_video_section),
+                    isTablet = isTablet,
+                ) {
+                    SettingsGroup(isTablet = isTablet) {
+                        SettingsSwitchRow(
+                            title = stringResource(Res.string.settings_playback_nvidia_rtx_super_resolution),
+                            description = stringResource(Res.string.settings_playback_nvidia_rtx_super_resolution_desc),
+                            checked = settings.nvidiaRtxSuperResolutionEnabled,
+                            isTablet = isTablet,
+                            onCheckedChange = PlayerSettingsRepository::setNvidiaRtxSuperResolutionEnabled,
+                        )
+                    }
+                }
+            }
         } else {
             SettingsSection(
                 title = stringResource(Res.string.settings_playback_ios_video_output),
